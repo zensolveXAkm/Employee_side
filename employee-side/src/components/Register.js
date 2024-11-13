@@ -20,19 +20,19 @@ const Register = () => {
       // Step 1: Create user in Appwrite authentication
       await account.create('unique()', email, password, name, phone);
 
-      // Step 2: Create profile document in profiles collection
-      const user = await account.get(); // Get current user data
-      await databases.createDocument(
-        '6730c1950007c16da598', // Replace with your database ID
-        'profiles', // Replace with your profiles collection ID
-        ID.unique(), // Generate unique document ID
-        {
-          userId: user.$id,
-          name: name,
-          email: email,
-          phone: phone
-        }
-      );
+      // // Step 2: Create profile document in profiles collection
+      // const user = await account.get(); // Get current user data
+      // await databases.createDocument(
+      //   '6730c1950007c16da598', // Replace with your database ID
+      //   'profiles', // Replace with your profiles collection ID
+      //   ID.unique(), // Generate unique document ID
+      //   {
+      //     userId: user.$id,
+      //     name: name,
+      //     email: email,
+      //     phone: phone
+      //   }
+      // );
 
       setSuccessMessage('Registration successful! Redirecting to login page...');
       setTimeout(() => {
