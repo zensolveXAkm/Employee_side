@@ -8,10 +8,14 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setErrorMessage(''); // Clear any previous error message
+
     try {
       // Step 1: Create user in Appwrite authentication
       await account.create('unique()', email, password, name, phone);
@@ -19,7 +23,7 @@ const Register = () => {
       // Step 2: Create profile document in profiles collection
       const user = await account.get(); // Get current user data
       await databases.createDocument(
-        'YOUR_DATABASE_ID', // Replace with your database ID
+        '6730c1950007c16da598', // Replace with your database ID
         'profiles', // Replace with your profiles collection ID
         ID.unique(), // Generate unique document ID
         {
@@ -30,9 +34,13 @@ const Register = () => {
         }
       );
 
-      navigate('/'); // Redirect to login page after successful registration
+      setSuccessMessage('Registration successful! Redirecting to login page...');
+      setTimeout(() => {
+        navigate('/'); // Redirect to login page after showing success message
+      }, 2000); // Delay of 2 seconds to show the success message
     } catch (error) {
       console.error(error.message);
+      setErrorMessage('Failed to register. Please try again.');
     }
   };
 
@@ -40,6 +48,8 @@ const Register = () => {
     <div className="min-h-screen flex items-center justify-center">
       <form onSubmit={handleRegister} className="w-80 p-4 bg-white shadow-md rounded">
         <h2 className="text-center text-xl font-bold">Register</h2>
+        {successMessage && <p className="text-green-500 text-center mb-2">{successMessage}</p>}
+        {errorMessage && <p className="text-red-500 text-center mb-2">{errorMessage}</p>}
         <input
           type="text"
           placeholder="Full Name"
