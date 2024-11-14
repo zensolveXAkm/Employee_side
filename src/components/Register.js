@@ -7,10 +7,6 @@ const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-<<<<<<< HEAD
-  const [phone, setPhone] = useState('');
-=======
->>>>>>> 205ccc8 (Initial commit)
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
@@ -20,34 +16,13 @@ const Register = () => {
     setErrorMessage(''); // Clear any previous error message
 
     try {
-      // Step 1: Create user in Appwrite authentication
+      // Create user in Appwrite authentication
       await account.create('unique()', email, password, name);
-
-<<<<<<< HEAD
-      // // Step 2: Create profile document in profiles collection
-      // const user = await account.get(); // Get current user data
-      // await databases.createDocument(
-      //   '6730c1950007c16da598', // Replace with your database ID
-      //   'profiles', // Replace with your profiles collection ID
-      //   ID.unique(), // Generate unique document ID
-      //   {
-      //     userId: user.$id,
-      //     name: name,
-      //     email: email,
-      //     phone: phone
-      //   }
-      // );
 
       setSuccessMessage('Registration successful! Redirecting to login page...');
       setTimeout(() => {
         navigate('/'); // Redirect to login page after showing success message
-      }, 2000); // Delay of 2 seconds to show the success message
-=======
-      setSuccessMessage('Registration successful! Redirecting to profile setup...');
-      setTimeout(() => {
-        navigate('/profile'); // Redirect to profile setup page after registration
       }, 2000);
->>>>>>> 205ccc8 (Initial commit)
     } catch (error) {
       console.error(error.message);
       setErrorMessage('Failed to register. Please try again.');
